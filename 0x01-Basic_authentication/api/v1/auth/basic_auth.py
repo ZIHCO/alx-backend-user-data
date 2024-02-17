@@ -45,4 +45,4 @@ class BasicAuth(Auth):
         if ":" not in decode_base64_authorization_header:
             return (None, None)
         list_credentials = decode_base64_authorization_header.split(":")
-        return (email[0], passwd[1])
+        return (list_credentials[0], list_credentials[1])
