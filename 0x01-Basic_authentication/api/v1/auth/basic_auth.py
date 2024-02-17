@@ -68,17 +68,8 @@ class BasicAuth(Auth):
 
     def current_user(self, request=None) -> TypeVar('User'):
         """retrieves User instance"""
-        _header = None
-        b64_head = None
-        str_decode = None
-        tuple_credentials = None
-        if request.headers.get("Authorization"):
-            _header = request.headers.get("Authorization")
-        if self.extract_base64_authorization_header(_header):
-            b64_head = self.extract_base64_authorization_header(_header)
-        if self.decode_base64_authorization_header(b64_head):
-            str_decode = self.decode_base64_authorization_header(b64_head)
-        if self.extract_user_credentials(str_decode):
-            tuple_credentials = self.extract_user_credentials(str_decode)
-        if self.user_object_from_credentials(tuple_credentials):
-            return self.user_object_from_credentials(tuple_credentials)
+        _header = request.headers.get("Authorization")
+        b64_head = self.extract_base64_authorization_header(_header)
+        str_decode = self.decode_base64_authorization_header(b64_head)
+        tuple_credentials = self.extract_user_credentials(str_decode)
+        return self.user_object_from_credentials(tuple_credentials)
