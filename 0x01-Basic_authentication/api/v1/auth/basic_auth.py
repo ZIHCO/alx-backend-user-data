@@ -4,6 +4,7 @@ from api.v1.auth.auth import Auth
 import base64
 from typing import TypeVar
 from models.user import User
+from models import .DB_Store
 
 
 class BasicAuth(Auth):
@@ -60,7 +61,7 @@ class BasicAuth(Auth):
         if not user_pwd or type(user_pwd) is not str:
             return None
         try:
-            student = User.search(user_email)
+            student = .DB_Store.search(User, user_email)
             student.is_valid_password(user_pwd)
             return student
         except Exception:
