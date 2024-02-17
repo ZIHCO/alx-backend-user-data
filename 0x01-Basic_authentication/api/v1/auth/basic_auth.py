@@ -65,3 +65,20 @@ class BasicAuth(Auth):
                 return student[0]
         except Exception:
             return None
+
+    def current_user(self, request=None) -> TypeVar('User'):
+        """retrieves User instance"""
+        _header = None
+        b64_head = None
+        str_decode = None
+        tuple_credentials = None
+        if request.headers.get("Authorization"):
+            _header = request.headers.get("Authorization")
+        if self.extract_base64_authorization_header(_header):
+            b64_head = self.extract_base64_authorization_header(_header)
+        if self.decode_base64_authorization_header(b64_head):
+            str_decode = self.decode_base64_authorization_header(b64_head)
+        if self.extract_user_credentials(str_decode):
+            tuple_credentials = self.extract_user_credentials(str_decode)
+        if self.user_object_from_credentials(tuple_credentials):
+            return self.user_object_from_credentials(tuple_credentials)
