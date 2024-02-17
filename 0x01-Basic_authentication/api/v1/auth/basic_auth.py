@@ -11,7 +11,7 @@ class BasicAuth(Auth):
         """implement base64 encoding"""
         if not authorization_header:
             return None
-        if authorization_header is not str:
+        if type(authorization_header) is not str:
             return None
         if authorization_header[0:6] != "Basic ":
             return None
