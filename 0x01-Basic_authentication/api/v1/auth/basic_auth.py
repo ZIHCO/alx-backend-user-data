@@ -3,7 +3,7 @@
 from api.v1.auth.auth import Auth
 import base64
 from typing import TypeVar
-from api.v1.models import User
+from models.user import User
 
 
 class BasicAuth(Auth):
@@ -62,5 +62,6 @@ class BasicAuth(Auth):
         try:
             student = User.search(user_email)
             student.is_valid_password(user_pwd)
+            return student
         except Exception:
             return None
