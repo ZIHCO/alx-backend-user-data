@@ -49,7 +49,7 @@ def before_request():
                       '/api/v1/unauthorized/',
                       '/api/v1/forbidden/'
                       ]
-        if auth.require_auth(request.path, paths_list):
+        if not auth.require_auth(request.path, paths_list):
             if auth.authorization_header(request):
                 abort(401)
             if not auth.current_user(request):
