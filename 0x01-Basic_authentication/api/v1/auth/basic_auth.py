@@ -61,7 +61,7 @@ class BasicAuth(Auth):
             return None
         try:
             student = User.search({'email': user_email})
-            student[0].is_valid_password(user_pwd)
-            return student[0]
+            if student[0].is_valid_password(user_pwd):
+                return student[0]
         except Exception:
             return None
