@@ -72,4 +72,5 @@ class BasicAuth(Auth):
         b64_head = self.extract_base64_authorization_header(_header)
         str_decode = self.decode_base64_authorization_header(b64_head)
         tuple_credentials = self.extract_user_credentials(str_decode)
-        return self.user_object_from_credentials(tuple_credentials)
+        email, passwd = tuple_credentials
+        return self.user_object_from_credentials(email, passwd)
