@@ -60,8 +60,8 @@ class BasicAuth(Auth):
         if not user_pwd or type(user_pwd) is not str:
             return None
         try:
-            student = User.search(user_email, file)
-            student.is_valid_password(user_pwd)
-            return student
+            student = User.search({'email': user_email})
+            if student.is_valid_password(user_pwd):
+                return student
         except Exception:
             return None
