@@ -5,3 +5,4 @@ from api.auth.auth import Auth
 
 class BasicAuth(Auth):
     """implement basicauth"""
+    pass
