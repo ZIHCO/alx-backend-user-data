@@ -2,6 +2,8 @@
 """basic authorization"""
 from api.v1.auth.auth import Auth
 import base64
+from typing import TypeVar
+from api.v1.models import User
 
 
 class BasicAuth(Auth):
@@ -46,3 +48,19 @@ class BasicAuth(Auth):
             return (None, None)
         list_credentials = decode_base64_authorization_header.split(":")
         return (list_credentials[0], list_credentials[1])
+
+    def user_object_from_credentials(self,
+                                     user_email: str,
+                                     user_pwd: str,
+                                     ) -> TypeVar('User'):
+        """build user obj from users credentials"""
+
+        if not user_email or type(user_email) is not str:
+            return None
+        if not user_pwd or type(user_pwd) is not str:
+            return None
+        try:
+            student = User.search(user_email)
+            student.is_valid_password(user_pwd)
+        except Exception:
+            return None
