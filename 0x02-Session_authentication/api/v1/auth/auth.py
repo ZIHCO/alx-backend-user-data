@@ -34,4 +34,4 @@ class Auth:
         if not request:
             return None
         if getenv("SESSION_NAME", "_my_session_id"):
-            return request.cookies.get(getenv("SESSION_NAME", "_my_session_id")).to_json()
+            return request.cookies.get(getenv("SESSION_NAME"))
