@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """script contains the Auth class"""
-from flask import request
+from flask import request, jsonify
 from typing import List, TypeVar
 from os import getenv
 
@@ -31,7 +31,8 @@ class Auth:
 
     def session_cookie(self, request=None):
         """cookie value"""
+        print(getenv("SESSION_NAME"))
         if not request:
             return None
         if getenv("SESSION_NAME", "_my_session_id"):
-            return request.cookies.get("_my_session_id")
+            return jsonify(request.cookies.get(getenv("SESSION_NAME", "_my_session_id")).to_json())
