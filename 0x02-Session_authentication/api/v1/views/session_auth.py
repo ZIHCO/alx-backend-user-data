@@ -3,6 +3,7 @@
 from api.v1.views import app_views
 from flask import request, jsonify
 from models.user import User
+from os import getenv
 
 
 @app_views.route('/auth_session/login', methods=['POST'], strict_slashes=False)
@@ -17,11 +18,11 @@ def login():
     user = User.search({"email": email})
     if not user:
         return jsonify({"error": "no user found for this email"}), 404
-    if not user.is_valid_password(passwd):
+    if not user[0].is_valid_password(passwd):
         return jsonify({"error": "wrong password"}), 401
-    else:
-        from api.v1.app import auth
-        session_id = auth.create_session(user.get("user_id"))
-        output = jsonify(user.to_json())
-        output.set_cookie(getenv('SESSION_NAME'), session_id)
-        return output
+
+    from api.v1.app import auth
+    session_id = auth.create_session(user[0].to_json().get("id"))
+    output = jsonify(user[0].to_json())
+    output.set_cookie(getenv('SESSION_NAME'), session_id)
+    return output
