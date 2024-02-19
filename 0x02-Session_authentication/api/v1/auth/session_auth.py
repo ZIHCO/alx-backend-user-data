@@ -3,6 +3,7 @@
 from api.v1.auth.auth import Auth
 from uuid import uuid4
 from models.user import User
+from flask import jsonify
 
 
 class SessionAuth(Auth):
@@ -35,3 +36,15 @@ class SessionAuth(Auth):
         if session_id:
             user_id_for_session_id = self.user_id_for_session_id(session_id)
             return User.get(user_id_for_session_id)
+
+    def destroy_session(self, request=None):
+        """delete a session"""
+        if not request:
+            return False
+        if not self.session_cookie(request):
+            return False
+        user_id_for_session_id = self.user_id_for_session_id(self.session_cookie(request))
+        if not user_id_for_session_id: 
+            return False
+        del type(self).user_id_by_session_id[user_id_for_session_id]
+        return jsonify({}), 200
