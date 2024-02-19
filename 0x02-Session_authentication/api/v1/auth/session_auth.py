@@ -48,4 +48,4 @@ class SessionAuth(Auth):
         if not user_id_for_session_id:
             return False
         del type(self).user_id_by_session_id[session_id]
-        return jsonify({}), 200
+        return True
