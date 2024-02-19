@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """contain SessionExpAuth"""
 from api.v1.auth.session_auth import SessionAuth
-from datetime import datetime
+from datetime import datetime, timedelta
 from os import getenv
 
 
@@ -37,7 +37,6 @@ class SessionExpAuth(SessionAuth):
         created_at = session_dictionary.get("created_at")
         if not created_at:
             return None
-        if ((created_at.second + self.session_duration) <
-           datetime.timedelta().seconds):
+        if (created_at.second + self.session_duration) < timedelta().seconds:
             return None
         return session_dictionary.get("user_id")
