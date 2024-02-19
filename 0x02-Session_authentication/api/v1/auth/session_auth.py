@@ -41,10 +41,11 @@ class SessionAuth(Auth):
         """delete a session"""
         if not request:
             return False
-        if not self.session_cookie(request):
+        session_id = self.session_cookie(request)
+        if not session_id:
             return False
-        user_id_for_session_id = self.user_id_for_session_id(self.session_cookie(request))
+        user_id_for_session_id = self.user_id_for_session_id(session_id)
         if not user_id_for_session_id: 
             return False
-        del type(self).user_id_by_session_id[user_id_for_session_id]
+        del type(self).user_id_by_session_id[session_id]
         return jsonify({}), 200
