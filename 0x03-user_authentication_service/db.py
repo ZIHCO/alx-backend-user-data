@@ -31,12 +31,12 @@ class DB:
             self.__session = DBSession()
         return self.__session
 
-    def add_user(self, email: str, hashed_password: str) -> TypeVar('User'):
+    def add_user(self, email: str, hashed_password: str) -> User:
         """add a user to DB"""
-        """if ((email and hashed_password) and
-           (type(email) is str and type(hashed_password) is str)):"""
-        kwargs = {"email": email, "hashed_password": hashed_password}
-        user = User(**kwargs)
-        self._session.add(user)
-        self._session.commit()
-        return user
+        if ((email and hashed_password) and
+           (type(email) is str and type(hashed_password) is str)):
+            kwargs = {"email": email, "hashed_password": hashed_password}
+            user = User(**kwargs)
+            self._session.add(user)
+            self._session.commit()
+            return user
