@@ -14,6 +14,10 @@ class Auth:
         if not path:
             return True
         if path not in excluded_paths:
+            for item in Excluded_paths:
+                if "*" in item:
+                    if item[0:-1] not in path:
+                        return True
             if (path + '/') not in excluded_paths:
                 return True
         return False
