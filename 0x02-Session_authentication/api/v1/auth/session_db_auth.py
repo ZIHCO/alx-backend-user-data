@@ -43,6 +43,7 @@ class SessionDBAuth(SessionExpAuth):
         if not request:
             return False
         try:
+            session_id = self.session_cookie(request)
             user_session = UserSession.search({"session_id": session_id})[0]
         except Exception:
             return False
