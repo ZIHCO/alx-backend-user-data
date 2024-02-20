@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """session DB Authentication"""
 from flask import request
+from datetime import datetime
 from api.v1.auth.session_exp_auth import SessionExpAuth
 from models.user_session import UserSession
 
@@ -32,7 +33,9 @@ class SessionDBAuth(SessionExpAuth):
             user_session = UserSession.search({"session_id": session_id})[0]
         except Exception:
             return None
-
+        if ((user_session.created_at.second + self.session_duration) <
+           datetime.now().second):
+            return None
         return user_session.to_json().get("user_id")
 
     def destory_session(self, request=None):
