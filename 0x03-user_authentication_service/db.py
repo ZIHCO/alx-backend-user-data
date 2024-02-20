@@ -2,7 +2,7 @@
 """DB module
 """
 from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
+# from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 from typing import TypeVar
@@ -17,7 +17,7 @@ class DB:
     def __init__(self) -> None:
         """Initialize a new DB instance
         """
-        self._engine = create_engine("sqlite:///a.db", echo=True)
+        self._engine = create_engine("sqlite:///a.db", echo=False)
         Base.metadata.drop_all(self._engine)
         Base.metadata.create_all(self._engine)
         self.__session = None
@@ -35,7 +35,8 @@ class DB:
         """add a user to DB"""
         if ((email and hashed_password) and
            (type(email) is str and type(hashed_password) is str)):
-            user = User(**{"email": email, "hashed_password": hashed_password})
+            kwargs = {"email": email, "hashed_password": hashed_password}
+            user = User(**kwargs)
             self._session.add(user)
             self._session.commit()
             return user
