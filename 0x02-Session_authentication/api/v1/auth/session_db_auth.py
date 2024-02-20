@@ -41,7 +41,7 @@ class SessionDBAuth(SessionExpAuth):
     def destory_session(self, request=None):
         """destroys the usersession based on the session_id"""
         if not request:
-            return None
+            return False
         try:
             user_session = UserSession.search({"session_id": session_id})[0]
         except Exception:
