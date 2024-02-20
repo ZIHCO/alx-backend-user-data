@@ -51,5 +51,5 @@ class SessionDBAuth(SessionExpAuth):
             return False
         if not user_session:
             return False
-        del type(self).user_id_by_session-id[user_session]
+        del type(self).user_id_by_session_id[user_session]
         return True
