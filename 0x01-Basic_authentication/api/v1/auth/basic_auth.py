@@ -51,7 +51,7 @@ class BasicAuth(Auth):
             passwd = ""
             for i in range(1, len(list_credentials)):
                 passwd += list_credentials[i]
-                if i != len(list_credentials) + 1:
+                if i != len(list_credentials) - 1:
                     passwd += ":"
             return (list_credentials[0], passwd)
         return (list_credentials[0], list_credentials[1])
