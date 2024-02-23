@@ -60,7 +60,7 @@ class DB:
             user = self.find_user_by(**user_id_key)
             for key in kwargs:
                 if key in user.__dict__:
-                    user.__dict__[key] = kwargs[key]
+                    user.key = kwargs[key]
             self._session.commit()
         except ValueError:
             raise ValueError()
