@@ -52,3 +52,14 @@ class DB:
             raise NoResultFound()
         except InvalidRequestError:
             raise InvalidRequestError()
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """search and returns list"""
+        user_id_key = {"id": user_id}
+        user = self.find_user_by(**user_id_key)
+        try:
+            for key in kwargs:
+                user.__dict__[key] = kwargs[key]
+                self._session.commit()
+        except ValueError:
+            raise ValueError()
