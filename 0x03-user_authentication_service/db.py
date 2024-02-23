@@ -55,12 +55,11 @@ class DB:
 
     def update_user(self, user_id: int, **kwargs) -> None:
         """update a user"""
+        user_id_key = {"id": user_id}
+        user = self.find_user_by(**user_id_key)
         try:
-            user_id_key = {"id": user_id}
-            user = self.find_user_by(**user_id_key)
-            for key in kwargs:
-                if key in user.__dict__:
-                    user.key = kwargs[key]
+            user.email = kwargs['email']
+            user.password = kwargs['password']
             self._session.commit()
         except ValueError:
             raise ValueError()
