@@ -54,12 +54,13 @@ class DB:
             raise InvalidRequestError()
 
     def update_user(self, user_id: int, **kwargs) -> None:
-        """search and returns list"""
+        """update a user"""
         try:
             user_id_key = {"id": user_id}
             user = self.find_user_by(**user_id_key)
             for key in kwargs:
-                user.__dict__[key] = kwargs[key]
-                self._session.commit()
+                if key in kwargs:
+                    user.__dict__[key] = kwargs[key]
+            self._session.commit()
         except ValueError:
             raise ValueError()
