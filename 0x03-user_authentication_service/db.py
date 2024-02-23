@@ -46,7 +46,8 @@ class DB:
     def find_user_by(self, **kwargs):
         """search and returns list"""
         try:
-            user = self._session.query(User).filter_by(**kwargs).one()
+            user = (self._session.query(User).filter_by(**kwargs).
+                    order_by(User.id).one())
             return user
         except NoResultFound:
             raise NoResultFound()
