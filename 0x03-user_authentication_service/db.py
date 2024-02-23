@@ -58,8 +58,8 @@ class DB:
         try:
             user_id_key = {"id": user_id}
             user = self.find_user_by(**user_id_key)
-            user.email = kwargs['email']
-            user.password = kwargs['password']
+            for key in kwargs:
+                user.key = kwargs[key]
             self._session.commit()
         except ValueError:
             raise ValueError()
