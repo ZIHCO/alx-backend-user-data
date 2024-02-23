@@ -55,9 +55,9 @@ class DB:
 
     def update_user(self, user_id: int, **kwargs) -> None:
         """update a user"""
-        user_id_key = {"id": user_id}
-        user = self.find_user_by(**user_id_key)
         try:
+            user_id_key = {"id": user_id}
+            user = self.find_user_by(**user_id_key)
             user.email = kwargs['email']
             user.password = kwargs['password']
             self._session.commit()
