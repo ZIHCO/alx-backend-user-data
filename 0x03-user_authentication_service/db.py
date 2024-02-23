@@ -58,8 +58,8 @@ class DB:
         try:
             user_id_key = {"id": user_id}
             user = self.find_user_by(**user_id_key)
-            for key in user.__dict__:
-                if key in kwargs:
+            for key in kwargs:
+                if key in user.__dict__:
                     user.__dict__[key] = kwargs[key]
             self._session.commit()
         except ValueError:
