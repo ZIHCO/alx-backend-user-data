@@ -43,11 +43,10 @@ class DB:
             self._session.commit()
             return user
 
-    def find_user_by(self, **kwargs):
+    def find_user_by(self, **kwargs) -> User:
         """search and returns list"""
         try:
-            user = (self._session.query(User).filter_by(**kwargs).
-                    order_by(User.id).one())
+            user = self._session.query(User).filter_by(**kwargs).one()
             return user
         except NoResultFound:
             raise NoResultFound()
